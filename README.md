@@ -6,3 +6,5 @@
 ### Viikkoraportit
 
 [Viikko 1](https://github.com/Hiipivahalko/regerege_rekka/blob/master/documentation/weeklyRaports/week1.md)
+[Viikko 2](https://github.com/Hiipivahalko/regerege_rekka/blob/master/documentation/weeklyRaports/week2.md)
+

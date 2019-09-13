@@ -23,3 +23,7 @@
 hs_err_pid*
 /regerege_rekka/.nb-gradle/
 /regerege_rekka/build/
+
+/regerege_rekka/.idea/
+/regerege_rekka/.gradle/
+
