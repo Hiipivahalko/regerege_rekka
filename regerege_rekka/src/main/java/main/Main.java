@@ -1,6 +1,5 @@
-package application;
+package main;
 
-import automaton.DFABuilder;
 import automaton.NFABuilder;
 import automaton.Node;
 
@@ -26,7 +25,7 @@ public class Main {
         //DFABuilder dfaBuilder = new DFABuilder(nfaBuilder.getNodeId(), nfaBuilder.getFinalNfa(), nfaBuilder.getInputChars());
         //dfaBuilder.buildDFA();
 
-        displayNFA(nfaBuilder.getFinalNfa());
+        //displayNFA(nfaBuilder.getFinalNfa());
 
         System.out.println("------------");
 

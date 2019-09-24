@@ -37,8 +37,6 @@ public class DFABuilder {
 
         allReadyProcessed.add(dfaStartNode);
 
-
-
         while (!unprocessedDFANodes.empty()) {
             Node curr = unprocessedDFANodes.pop();
 
@@ -79,6 +77,8 @@ public class DFABuilder {
         }
 
     }
+
+    //public void process
 
     private Set<Node> epsilonTransfers(Set<Node> nodeSet) {
         Stack<Node> nodesToProcess = new Stack<>();
