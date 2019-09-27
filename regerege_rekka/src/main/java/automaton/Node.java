@@ -8,22 +8,22 @@ import java.util.Set;
 public class Node {
 
     private int id;
-    //private ArrayList<Transfer> nfaTransfers;
-    private Map<Character, ArrayList<Node>> nfaTransfers;
-    private ArrayList<Transfer> dfaTransfers;
+    //private ArrayList<Transfer> transfers;
+    private Map<Character, ArrayList<Node>> transfers;
     private boolean isGoalNode;
-    private Set<Node> nfaNodeSet;
+    private Set<Node> nodeSet;
 
     public Node(int id) {
         this.id = id;
-        this.nfaTransfers = new HashMap<Character, ArrayList<Node>>();//new ArrayList<>();
+        this.transfers = new HashMap<>();
         this.isGoalNode = false;
+        this.nodeSet = null;
     }
 
     public Node(int id, Set<Node> nfaNodeSet) {
         this.id = id;
-        this.nfaNodeSet = nfaNodeSet;
-        this.dfaTransfers = new ArrayList<>();
+        this.nodeSet = nfaNodeSet;
+        this.transfers = new HashMap<>();
     }
 
     public boolean isGoalNode() {
@@ -34,12 +34,12 @@ public class Node {
         return id;
     }
 
-    public Map<Character, ArrayList<Node>> getNfaTransfers() {
-        return nfaTransfers;
+    public Map<Character, ArrayList<Node>> getTransfers() {
+        return transfers;
     }
 
-    public Set<Node> getNfaNodeSet() {
-        return nfaNodeSet;
+    public Set<Node> getNodeSet() {
+        return nodeSet;
     }
 
     public void setGoalNode(boolean goalNode) {
@@ -47,15 +47,17 @@ public class Node {
     }
 
     public void addTransfer(Node n, char c) {
-        if (!nfaTransfers.containsKey(c)) {
-            nfaTransfers.put(c, new ArrayList<Node>());
+        if (!transfers.containsKey(c)) {
+            transfers.put(c, new ArrayList<Node>());
         }
-        nfaTransfers.get(c).add(n);
+        transfers.get(c).add(n);
 
     }
 
-    public void addTransfer(Set<Node> s, char c) {
-        dfaTransfers.add(new Transfer(s, c));
+
+    @Override
+    public String toString() {
+        return "NodeId: " + getId();
     }
 
 

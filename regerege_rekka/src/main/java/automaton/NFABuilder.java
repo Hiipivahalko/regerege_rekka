@@ -15,6 +15,7 @@ public class NFABuilder {
     private Stack<Character> operatorsStack;
     private LinkedList<Node> finalNfa;
     private String regex;
+    private char epsilon;
 
     public NFABuilder(String regex) {
         this.nodeId = -1;
@@ -23,7 +24,10 @@ public class NFABuilder {
         this.operatorsStack = new Stack<>();
         this.finalNfa = new LinkedList<>();
         this.regex = regex;
+        this.epsilon = '#';
     }
+
+    // Getterit
 
     public LinkedList<Node> getFinalNfa() {
         return finalNfa;
@@ -49,6 +53,9 @@ public class NFABuilder {
         return regex;
     }
 
+
+    // Setterit
+
     public void setNodeId(int nodeId) {
         this.nodeId = nodeId;
     }
@@ -72,6 +79,9 @@ public class NFABuilder {
     public void setRegex(String regex) {
         this.regex = regex;
     }
+
+    ///////
+
 
     /**
      * Build metodi rakentaa NFA-automaatin annetusta "regex"-lausekkeesta itratiivisesti
@@ -193,7 +203,7 @@ public class NFABuilder {
         LinkedList<Node> nfaB = nfaStack.pop();
         LinkedList<Node> nfaA = nfaStack.pop();
 
-        nfaA.get(nfaA.size()-1).addTransfer(nfaB.get(0), '#');
+        nfaA.get(nfaA.size()-1).addTransfer(nfaB.get(0), epsilon);
         nfaA.addAll(nfaB);
         nfaStack.push(nfaA);
     }
@@ -209,11 +219,11 @@ public class NFABuilder {
         Node start = new Node(++nodeId);
         Node end = new Node(++nodeId);
 
-        start.addTransfer(end, '#');
-        start.addTransfer(nfaA.get(0), '#');
+        start.addTransfer(end, epsilon);
+        start.addTransfer(nfaA.get(0), epsilon);
 
-        nfaA.get(nfaA.size()-1).addTransfer(end, '#');
-        nfaA.get(nfaA.size()-1).addTransfer(nfaA.get(0), '#');
+        nfaA.get(nfaA.size()-1).addTransfer(end, epsilon);
+        nfaA.get(nfaA.size()-1).addTransfer(nfaA.get(0), epsilon);
 
         nfaA.addFirst(start);
         nfaA.addLast(end);
@@ -231,11 +241,11 @@ public class NFABuilder {
         Node start = new Node(++nodeId);
         Node end = new Node(++nodeId);
 
-        start.addTransfer(nfaA.get(0), '#');
-        start.addTransfer(nfaB.get(0), '#');
+        start.addTransfer(nfaA.get(0), epsilon);
+        start.addTransfer(nfaB.get(0), epsilon);
 
-        nfaA.get(nfaA.size()-1).addTransfer(end, '#');
-        nfaB.get(nfaB.size()-1).addTransfer(end, '#');
+        nfaA.get(nfaA.size()-1).addTransfer(end, epsilon);
+        nfaB.get(nfaB.size()-1).addTransfer(end, epsilon);
 
         nfaA.addFirst(start);
         nfaB.addLast(end);

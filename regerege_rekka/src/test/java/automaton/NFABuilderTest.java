@@ -3,6 +3,7 @@ package automaton;
 
 import org.junit.*;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Stack;
 
@@ -14,6 +15,7 @@ public class NFABuilderTest {
     private String regex1 = "test";
     private String regex2 = "t(es)*t";
     private String regex3 = "t*est";
+    private char epsilonMove = '#';
 
     @Before
     public void setUp() throws Exception {
@@ -63,9 +65,9 @@ public class NFABuilderTest {
         assertTrue(l.size() == 2);
 
         Node a = l.get(0);
-        assertTrue(a.getNfaTransfers().containsKey(c));
-        assertTrue(!a.getNfaTransfers().containsKey('b'));
-        assertTrue(a.getNfaTransfers().get(c).size() == 1);
+        assertTrue(a.getTransfers().containsKey(c));
+        assertTrue(!a.getTransfers().containsKey('b'));
+        assertTrue(a.getTransfers().get(c).size() == 1);
 
     }
 
@@ -80,28 +82,53 @@ public class NFABuilderTest {
 
         assertTrue(nb.getNfaStack().size() == 1);
         assertTrue(nb.getNfaStack().get(0).size() == 4);
-        assertTrue(nb.getNfaStack().get(0).get(1).getNfaTransfers().containsKey('#'));
-    }
-
-
-    @Test
-    public void getFinalNfa() {
+        assertTrue(nb.getNfaStack().get(0).get(1).getTransfers().containsKey(epsilonMove));
     }
 
     @Test
-    public void getNodeId() {
+    public void union() {
+        nb.setNfaStack(new Stack<>());
+
+        nb.push('a');
+        int id = nb.getNfaStack().peek().get(0).getId();
+        nb.push('b');
+        int id2 = nb.getNfaStack().peek().get(0).getId();
+
+        nb.union();
+        ArrayList<Node> startNode_moves = nb.getNfaStack().peek().get(0).getTransfers().get(epsilonMove);
+
+        assertTrue(nb.getNfaStack().size() == 1);
+        assertTrue(nb.getNfaStack().get(0).size() == 6);
+
+        assertTrue(startNode_moves.size() == 2);
+        assertTrue(startNode_moves.get(0).getId() == id);
+        assertTrue(startNode_moves.get(1).getId() == id2);
     }
 
     @Test
-    public void getInputChars() {
-    }
+    public void star() {
+        nb.setNfaStack(new Stack<>());
 
-    @Test
-    public void build() {
-    }
+        nb.push('a');
+        int idA = nb.getNfaStack().peek().get(0).getId();
+        nb.push('b');
+        int idB = nb.getNfaStack().peek().get(0).getId();
 
-    @Test
-    public void precedence() {
+        nb.concat();
+
+        int sizeBeforeStart = nb.getNfaStack().peek().size();
+        //System.out.println(idA + " " + idB + " " + sizeBeforeStart);
+
+        nb.star();
+
+        assertTrue(nb.getNfaStack().peek().size() == sizeBeforeStart + 2);
+        int listSize = nb.getNfaStack().peek().size();
+        LinkedList<Node> top = nb.getNfaStack().peek();
+        assertTrue(top.get(listSize-2).getTransfers().get(epsilonMove).size() == 2);
+        assertTrue(top.get(listSize-2).getTransfers().get(epsilonMove).get(1).getId() == idA);
+        assertTrue(top.get(0).getTransfers().get(epsilonMove).size() == 2);
+        assertTrue(top.get(0).getTransfers().get(epsilonMove).get(0).getId() == top.get(listSize-1).getId());
+        assertTrue(top.get(0).getTransfers().get(epsilonMove).get(1).getId() == idA);
     }
 
 

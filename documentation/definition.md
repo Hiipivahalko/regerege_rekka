@@ -6,6 +6,9 @@
 
 ### Projektin algoritmeja
 * [Thompson's construction (McNaughton-Yamada-Thompson)](https://en.wikipedia.org/wiki/Thompson%27s_construction)
+* [Powerset construction](https://en.wikipedia.org/wiki/Powerset_construction)
 * keko
-* arraylista
+* linkitetty lista
+* hajautettujoukko (Set)
+* hajautustaulu (hashmap)
 

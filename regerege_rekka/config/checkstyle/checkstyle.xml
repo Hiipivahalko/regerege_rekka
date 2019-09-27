@@ -4,7 +4,7 @@
 
     <module name="TreeWalker">
       <module name="MethodLength">
-        <property name="max" value="100"/>
+        <property name="max" value="30"/>
       </module>
       <module name="NestedIfDepth">
         <property name="max" value="2"/>
