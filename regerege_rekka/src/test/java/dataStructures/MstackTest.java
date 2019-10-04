@@ -41,26 +41,26 @@ public class MstackTest {
         s.push(3);
         s.push(5);
         s.push(6);
-        s.push(1);
+        s.push(8);
 
         assertTrue(s.size() == 5);
 
         int ret = s.pop();
-
+        System.out.println(s.peek());
         assertTrue(s.size()==4);
         assertTrue(ret == 1);
+        System.out.println("jou " + s.peek());
         ret = s.pop();
+        System.out.println("mää");
+        System.out.println(ret);
         assertTrue(s.size()==3);
         assertTrue(ret==6);
 
+        /*s.pop();
         s.pop();
         s.pop();
-        s.pop();
-        s.pop();
-        s.pop();
-        s.pop();
-        s.pop();
-        assertTrue(s.size()== 0);
+
+        assertTrue(s.size()== 0);*/
 
     }
 

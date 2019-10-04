@@ -21,9 +21,6 @@ public class Main {
             myRegex = args[0];
             System.out.println(myRegex);
             System.exit(0);
-        } else {
-
-            System.exit(1);
         }
         NFABuilder nfa = new NFABuilder(myRegex);
         nfa.build();

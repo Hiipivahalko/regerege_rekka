@@ -1,41 +1,45 @@
 package dataStructures;
 
-public class Mstack<T> {
+public class Mstack<E> {
 
-    private Object[] objects;
-    private int top;
+    private LinkNode<E> top;
+    private int size;
 
 
     public Mstack() {
-        this.objects = new Object[100];
-        this.top = -1;
+        this.top = null;
+        this.size = 0;
     }
 
-    public void push(T t) {
-        top++;
-        if (top == objects.length) moreSpace();
-        objects[top] = t;
+    public void push(Object t) {
+
+        LinkNode<E> fresh = new LinkNode<>((E) t, top);
+        top = fresh;
+        size++;
     }
 
-    public void moreSpace() {
-        int size = 2* objects.length;
-        Object[] biggerArr = new Object[size];
-        for (int i = 0; i < objects.length; i++) biggerArr[i] = objects[i];
-        objects = biggerArr;
+    public E pop() {
+        if (top == null) {
+            System.out.println("Error with pop method MStack<>, Object was NULL");
+            System.out.println(size());
+            System.exit(1);
+        }
+        Object value = top.getKey();
+        System.out.println("value:" + value);
+        top = top.getPrev();
+        size--;
+        return (E) value;
     }
 
-    public T pop() {
-        if (isEmpty()) return null;
-        T t = (T) objects[top];
-        top--;
-        return t;
+    public E peek() {
+        return top.getKey();
     }
 
     public boolean isEmpty() {
-        return top == -1;
+        return size == 0;
     }
 
     public int size() {
-        return top+1;
+        return size;
     }
 }
