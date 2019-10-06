@@ -2,13 +2,12 @@ package main;
 
 import automaton.DFABuilder;
 import automaton.NFABuilder;
-import automaton.Node;
 import debug.DisplayAutomaton;
 import process.Finder;
+import process.Process;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
-import java.util.LinkedList;
 
 public class Main {
     /**
@@ -16,29 +15,16 @@ public class Main {
      */
     public static void main(String[] args) {
 
-        String myRegex = "Tiralabra";
-        if (args.length > 0) {
-            myRegex = args[0];
-            System.out.println(myRegex);
-            System.exit(0);
-        }
-        NFABuilder nfa = new NFABuilder(myRegex);
-        nfa.build();
-        DisplayAutomaton da = new DisplayAutomaton();
-        DFABuilder dfaBuilder = new DFABuilder(nfa.getNodeId(), nfa.getFinalNfa(), nfa.getInputChars());
-        dfaBuilder.buildDFA();
-        Finder finder = new Finder(dfaBuilder.getStartNode());
-        try (BufferedReader bf = new BufferedReader(new FileReader("src/main/resources/testfile.txt"))) {
-            String line;
-            while ((line = bf.readLine()) != null) {
-                //System.out.println(line);
-                finder.findSubstring(line);
-            }
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            System.out.println(e.getStackTrace());
+        if (args.length > 1) {
+            Process app = new Process(args);
+            app.run();
 
+        } else {
+            System.out.println("Insert arguments to program");
+            System.out.println("    gradle run --args'<regex> <path_to_file>'   or\n" +
+                    "   java -jar file.jar \"<regex>\" <path_to_file>");
         }
+
     }
 
 

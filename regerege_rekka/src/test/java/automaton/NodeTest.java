@@ -1,5 +1,6 @@
 package automaton;
 
+import automaton.node.Node;
 import org.junit.Before;
 import org.junit.Test;
 

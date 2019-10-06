@@ -1,6 +1,6 @@
 package debug;
 
-import automaton.Node;
+import automaton.node.Node;
 
 import java.util.LinkedList;
 

@@ -1,17 +1,13 @@
 package process;
 
-import automaton.Node;
+import automaton.node.Node;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.Set;
 
 public class Finder {
 
-    private String currLine;
     private Node startNode;
-    private Set<Character> nextMoves;
     private int idx;
     private int leftIdx;
     private int rightIdx;
@@ -19,42 +15,52 @@ public class Finder {
     private boolean insideGraph;
     private final String  ANSI_RED  = "\u001B[31m";
     private final String  ANSI_NORMAL = "\u001B[0m";
-    private StringBuilder builder;
+    //private StringBuilder builder;
 
+    /**
+     * Tutkii toteuttaako annetut merkkijonot DFA-verkkoa
+     * @param startNode
+     */
     public Finder(Node startNode) {
-        this.currLine = "";
         this.startNode = startNode;
         this.currNode = null;
         this.idx = 0;
-        this.nextMoves = new HashSet<>();
         this.leftIdx = 0;
         this.rightIdx = 0;
         this.insideGraph = false;
     }
 
-
-    public void findSubstring(String nextLine) {
-        currLine = nextLine;
+    /**
+     * Käy läpi DFA-verkkoa annetulla merkkijonolla
+     * @param line - Tutkittava merkkijono
+     * @return - jos merkkijono läpäisee verkon, niin metodi palauttaa true arvon, muuten false
+     */
+    public boolean findSubstring(String line) {
         currNode = startNode;
 
         idx = 0;
         char currChar = 'a';
         insideGraph= false;
-        while (idx < currLine.length()) {
-            currChar = currLine.charAt(idx);
+        while (idx < line.length()) {
+            currChar = line.charAt(idx);
             if (!insideGraph && currNode.getTransfers().get(currChar) == null) {
                 idx++;
                 continue;
             } else {
                 if (moveInsideAutomaton(currChar)) {
-                    System.out.println(currLine);
-                    return;
+                    return true;
                 }
             }
             if (insideGraph) idx++;
         }
+        return false;
     }
 
+    /**
+     * Liikkuua DFA-verkon sisällä jos pystyy
+     * @param currChar - symboli jolla yritetään liikkua verkossa
+     * @return - palauttaa tosi, jos solmu johon on liikuttu on yksi maalisolmuista
+     */
     public boolean moveInsideAutomaton(char currChar) {
         if (!insideGraph) leftIdx = idx;
         insideGraph = true;
@@ -70,10 +76,6 @@ public class Finder {
             }
 
             if (currNode.isGoalNode()) {
-                rightIdx = idx;
-                builder.append(ANSI_RED);
-                builder.append(currLine.substring(leftIdx, rightIdx));
-                insideGraph = false;
                 return true;
             }
 

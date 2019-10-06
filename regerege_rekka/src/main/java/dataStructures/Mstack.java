@@ -1,44 +1,68 @@
 package dataStructures;
 
-public class Mstack<E> {
+public class Mstack<T> {
 
-    private LinkNode<E> top;
+    private LinkNode<T> top;
     private int size;
+    private LinkNode<T> empty;
 
-
+    /**
+     * Luo uuden pinon tietorakenteen
+     */
     public Mstack() {
-        this.top = null;
+        this.empty = new LinkNode<>(null, null, null);
+        this.top = empty;
         this.size = 0;
     }
 
-    public void push(Object t) {
+    /**
+     * Asettaa pinon ensimmäiseksi/päällimäiseksi alkioksi annetun arvon
+     * @param t - pinoon asetettava arvo
+     */
+    public void push(T t) {
 
-        LinkNode<E> fresh = new LinkNode<>((E) t, top);
+        LinkNode<T> fresh = new LinkNode<>(t, empty, empty);
+        fresh.setPrev(top);
         top = fresh;
         size++;
     }
 
-    public E pop() {
-        if (top == null) {
+    /**
+     * Poistaa pinosta päällimmäisen arvon ja asettaa päällimäiseksi uuden arvon
+     * @return - palauttaa poistetun arvon
+     */
+    public T pop() {
+        if (top.getKey() == null) {
             System.out.println("Error with pop method MStack<>, Object was NULL");
             System.out.println(size());
             System.exit(1);
         }
-        Object value = top.getKey();
-        System.out.println("value:" + value);
+        T value = top.getKey();
         top = top.getPrev();
         size--;
-        return (E) value;
+        return value;
     }
 
-    public E peek() {
-        return top.getKey();
+    /**
+     * Näyttää mikä arvo/alkio on pinon päällimmäisenä, mutta ei poista sitä pinosta
+     * @return - palauttaa päällimmäisen alkon arvon
+     */
+    public T peek() {
+        return (T) top.getKey();
     }
 
+    /**
+     * Kertoo onko pino tyhjä
+     * @return - palauttaa TRUE jos pino on tyhjä, muuten FALSE
+     */
     public boolean isEmpty() {
         return size == 0;
     }
 
+    /**
+     * Kertoo kuinka monta alkiota on pinossa
+     * @return - alkioiden lukumäärä
+     */
     public int size() {
         return size;
     }

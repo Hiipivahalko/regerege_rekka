@@ -1,18 +1,21 @@
-package automaton;
+package automaton.node;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+
 public class Node {
 
     private int id;
-    //private ArrayList<Transfer> transfers;
     private Map<Character, ArrayList<Node>> transfers;
     private boolean isGoalNode;
     private Set<Node> nodeSet;
 
+    /**
+     * NFA- ja DFA-verkon solmu
+     */
     public Node(int id) {
         this.id = id;
         this.transfers = new HashMap<>();
@@ -21,10 +24,11 @@ public class Node {
     }
 
     public Node(int id, Set<Node> nfaNodeSet) {
-        this.id = id;
+        this(id);
         this.nodeSet = nfaNodeSet;
-        this.transfers = new HashMap<>();
     }
+
+    // Getterit
 
     public boolean isGoalNode() {
         return isGoalNode;
@@ -38,6 +42,8 @@ public class Node {
         return transfers;
     }
 
+    // Setterit
+
     public Set<Node> getNodeSet() {
         return nodeSet;
     }
@@ -46,6 +52,13 @@ public class Node {
         isGoalNode = goalNode;
     }
 
+    ///////////////
+
+    /**
+     * Lisää solmulle yksisuuntaisenkaaren solmuun n, annetulla symbolilla c
+     * @param n - kohde solmu
+     * @param c - kaarella
+     */
     public void addTransfer(Node n, char c) {
         if (!transfers.containsKey(c)) {
             transfers.put(c, new ArrayList<Node>());
@@ -54,10 +67,9 @@ public class Node {
 
     }
 
-
     @Override
     public String toString() {
-        return "NodeId: " + getId();
+        return "NodeId: " + getId() ;
     }
 
 

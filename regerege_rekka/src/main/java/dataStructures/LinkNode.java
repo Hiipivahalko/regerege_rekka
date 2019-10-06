@@ -1,43 +1,68 @@
 package dataStructures;
 
-public class LinkNode<E> {
+public class LinkNode<T> {
 
-    private E key;
-    private LinkNode<E> next;
-    private LinkNode<E> prev;
+    private T key;
+    private LinkNode<T> next;
+    private LinkNode<T> prev;
 
-    public LinkNode(E key, LinkNode<E> prev) {
-        this.key = key;
-        this.next = prev;
-    }
-
-    public LinkNode(E key, LinkNode<E> next, LinkNode<E> prev) {
+    /**
+     * Luo uuden linkkisolmun, jolla on tieto seuraavasta ja edellisestä saman tyyppisestä oliosta.
+     * Toimii apuoliona esim. linkitetylle listalle ja pinolle.
+     * @param key
+     * @param prev
+     */
+    public LinkNode(T key, LinkNode<T> prev, LinkNode<T> next) {
         this.key = key;
         this.next = next;
         this.prev = prev;
     }
 
-    public E getKey() {
+    /**
+     * Palauttaa linkkisolmun arvon
+     * @return
+     */
+    public T getKey() {
         return key;
     }
 
-    public LinkNode<E> getNext() {
+    /**
+     *
+     * @return - Palauttaa seuraavaksi osoitetun linkkisolmun
+     */
+    public LinkNode<T> getNext() {
         return next;
     }
 
-    public LinkNode<E> getPrev() {
+    /**
+     *
+     * @return - palauttaa edelliseksi osoitetun linkkisolmun
+     */
+    public LinkNode<T> getPrev() {
         return prev;
     }
 
-    public void setKey(E key) {
+    /**
+     * Asettaa linkkisolmulle uuden arvon
+     * @param key - uusi arvo
+     */
+    public void setKey(T key) {
         this.key = key;
     }
 
-    public void setNext(LinkNode<E> next) {
+    /**
+     * Asettaa linkkisolmulle uuden seuraajasolmun
+     * @param next - seuraavaksi osoitettu solmu
+     */
+    public void setNext(LinkNode<T> next) {
         this.next = next;
     }
 
-    public void setPrev(LinkNode<E> prev) {
+    /**
+     * Asettaa linkkisolmulle uuden edeltäjäsolmun
+     * @param prev - edelliseksi osoitettu solmu
+     */
+    public void setPrev(LinkNode<T> prev) {
         this.prev = prev;
     }
 

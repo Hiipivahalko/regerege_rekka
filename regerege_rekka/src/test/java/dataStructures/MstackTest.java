@@ -8,10 +8,12 @@ import static org.junit.Assert.*;
 public class MstackTest {
 
     private Mstack<Integer> s;
+    private Mstack<String> s2;
 
     @Before
     public void setUp() {
         this.s = new Mstack<>();
+        this.s2 = new Mstack<>();
     }
 
     @Test
@@ -21,6 +23,7 @@ public class MstackTest {
         s.push(num);
         assertTrue(s.size() == 1);
         int i = s.pop();
+        assertTrue(s.size() != 1);
         assertTrue(i == num);
 
         s.push(num);
@@ -29,7 +32,42 @@ public class MstackTest {
         s.push(num);
 
         assertTrue(s.size() == 4);
+    }
 
+    @Test
+    public void push2() {
+
+        for (int i = 0; i < 150; i++) {
+            s.push(1);
+        }
+
+        assertTrue(s.size() == 150);
+
+    }
+
+    @Test
+    public void pushAndPopWithString() {
+
+        String myString = "test";
+        String myString2 = "Stack is best";
+        s2.push(myString);
+        assertTrue(s2.size() == 1);
+        String ans = s2.pop();
+        assertEquals("test", ans);
+
+        s2.push(myString);
+        s2.push(myString2);
+        s2.push(myString);
+        s2.push(myString2);
+
+        assertTrue(s2.size() == 4);
+        ans = s2.pop();
+        assertTrue(s2.size() != 4);
+        assertEquals("Stack is best", ans);
+        ans = s2.pop();
+        assertEquals("test", ans);
+        ans = s2.peek();
+        assertEquals("Stack is best", ans);
 
     }
 
@@ -46,21 +84,17 @@ public class MstackTest {
         assertTrue(s.size() == 5);
 
         int ret = s.pop();
-        System.out.println(s.peek());
         assertTrue(s.size()==4);
-        assertTrue(ret == 1);
-        System.out.println("jou " + s.peek());
+        assertTrue(ret == 8);
         ret = s.pop();
-        System.out.println("mää");
-        System.out.println(ret);
         assertTrue(s.size()==3);
         assertTrue(ret==6);
 
-        /*s.pop();
+        s.pop();
         s.pop();
         s.pop();
 
-        assertTrue(s.size()== 0);*/
+        assertTrue(s.size()== 0);
 
     }
 
@@ -79,14 +113,5 @@ public class MstackTest {
 
     }
 
-    @Test
-    public void push2() {
 
-        for (int i = 0; i < 150; i++) {
-            s.push(1);
-        }
-
-        assertTrue(s.size() == 150);
-
-    }
 }

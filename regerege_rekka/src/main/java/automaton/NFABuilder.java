@@ -1,6 +1,6 @@
 package automaton;
 
-import automaton.Node;
+import automaton.node.Node;
 
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -13,24 +13,14 @@ public class NFABuilder {
     private Set<Character> inputChars;
     private Stack<LinkedList<Node>> nfaStack;
     private Stack<Character> operatorsStack;
-    private LinkedList<Node> finalNfa;
-    private String regex;
     private char epsilon;
 
-    public NFABuilder(String regex) {
+    public NFABuilder() {
         this.nodeId = -1;
         this.inputChars = new HashSet<>();
         this.nfaStack = new Stack<>();
         this.operatorsStack = new Stack<>();
-        this.finalNfa = new LinkedList<>();
-        this.regex = regex;
         this.epsilon = '#';
-    }
-
-    // Getterit
-
-    public LinkedList<Node> getFinalNfa() {
-        return finalNfa;
     }
 
     public int getNodeId() {
@@ -47,10 +37,6 @@ public class NFABuilder {
 
     public Stack<Character> getOperatorsStack() {
         return operatorsStack;
-    }
-
-    public String getRegex() {
-        return regex;
     }
 
 
@@ -72,35 +58,30 @@ public class NFABuilder {
         this.operatorsStack = operatorsStack;
     }
 
-    public void setFinalNfa(LinkedList<Node> finalNfa) {
-        this.finalNfa = finalNfa;
-    }
-
-    public void setRegex(String regex) {
-        this.regex = regex;
-    }
-
     ///////
 
 
     /**
      * Build metodi rakentaa NFA-automaatin annetusta "regex"-lausekkeesta itratiivisesti
      */
-    public void build() {
+    public Node build(String regex) {
         regex = preprocess(regex);
         for (int i = 0; i < regex.length(); i++) {
-            parseRegex(i);
+            parseRegex(i, regex.charAt(i));
         }
 
+        //Toteuta loput operaattori komennot pinosta
         while (!operatorsStack.empty()) {
             operate();
         }
 
-        setFinalNode();
+        LinkedList<Node> finalNFA = nfaStack.pop();
+        finalNFA.get(finalNFA.size()-1).setGoalNode(true);
+        return finalNFA.get(0);
     }
 
-    public void parseRegex(int index) {
-        char next = regex.charAt(index);
+
+    public void parseRegex(int index, char next) {
 
         if (!checkIfOperator(next)) {
             push(next);
@@ -120,10 +101,6 @@ public class NFABuilder {
         }
     }
 
-    public void setFinalNode() {
-        finalNfa = nfaStack.pop();
-        finalNfa.get(finalNfa.size()-1).setGoalNode(true);
-    }
 
     /**
      * Tarkistetaan onko annettu merkki joku erikoismerkeistä
@@ -214,7 +191,6 @@ public class NFABuilder {
     public void star() {
 
         LinkedList<Node> nfaA = nfaStack.pop();
-
 
         Node start = new Node(++nodeId);
         Node end = new Node(++nodeId);

@@ -1,6 +1,7 @@
 package automaton;
 
 
+import automaton.node.Node;
 import org.junit.*;
 
 import java.util.ArrayList;
@@ -19,8 +20,8 @@ public class NFABuilderTest {
 
     @Before
     public void setUp() throws Exception {
-        this.nb = new NFABuilder(regex2);
-        this.nb.build();
+        this.nb = new NFABuilder();
+        this.nb.build(regex2);
     }
 
     @Test
