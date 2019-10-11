@@ -1,19 +1,21 @@
 package dataStructures;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
-public class Mmap<T, K> {
+public class Hash<T> {
 
     private ArrayList<T>[] hashTable;
     private int N = 1002257; // modulo + size of hashTable
 
-    public Mmap() {
+    public Hash() {
         this.hashTable = new ArrayList[N];
     }
 
-    private int hashFunction(int hashCode) {
+    public int hashFunction(int hashCode) {
         return hashCode % N;
     }
 
-    public put(T, K)
+
+
 }

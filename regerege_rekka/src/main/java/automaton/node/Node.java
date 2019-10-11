@@ -67,6 +67,34 @@ public class Node {
 
     }
 
+    /**
+     * Palauttaa Node objektin hasharvon, jota voidaan käyttää esim hajautustauluissa
+     * @return
+     */
+    @Override
+    public int hashCode() {
+        return getId();
+    }
+
+    /**
+     * Kertoo ovatko kaksi objectia samoja
+     * @param o - vertailtava objekti
+     * @return - palauttaa true jos ovat samoja, muuten false
+     */
+    @Override
+    public boolean equals(Object o) {
+        Node n = (Node) o;
+
+        if (this.getClass() != o.getClass()) return false;
+
+        if (id != n.getId()) return false;
+        if (nodeSet != n.getNodeSet()) return false;
+        if (isGoalNode != n.isGoalNode()) return false;
+        //if (transfers != n.getTransfers()) return false;
+
+        return true;
+    }
+
     @Override
     public String toString() {
         return "NodeId: " + getId() ;

@@ -19,7 +19,8 @@ public class Process {
     }
 
     /**
-     * Etsii annetusta tiedostosta yhtenäisiä osamerkkijonoja ,jotka sisältyy annettuun säännölliseen lausekkeeseen
+     * Etsii annetusta tiedostosta yhtenäisiä osamerkkijonoja,
+     * jotka sisältyy annettuun säännölliseen lausekkeeseen
      */
     public void run() {
         Finder finder = new Finder(startNode);
