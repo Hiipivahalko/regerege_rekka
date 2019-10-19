@@ -15,5 +15,5 @@ public class Mmap<T, K> {
         return hashCode % N;
     }
 
-    public put(T, K)
+    //public put(T, K)
 }

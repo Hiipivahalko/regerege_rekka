@@ -19,4 +19,5 @@ tulossa myöhemmin
 [Viikko 3](https://github.com/Hiipivahalko/regerege_rekka/blob/master/documentation/weeklyRaports/week3.md),
 [Viikko 4](https://github.com/Hiipivahalko/regerege_rekka/blob/master/documentation/weeklyRaports/week4.md),
 [Viikko 5](https://github.com/Hiipivahalko/regerege_rekka/blob/master/documentation/weeklyRaports/week5.md)
+[Viikko 6](https://github.com/Hiipivahalko/regerege_rekka/blob/master/documentation/weeklyRaports/week6.md)
 

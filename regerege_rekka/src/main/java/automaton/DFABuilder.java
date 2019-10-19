@@ -182,7 +182,6 @@ public class DFABuilder {
                     result.add(next);
                 }
             }
-
         }
         return result;
     }

@@ -1,18 +1,18 @@
 package dataStructures;
 
-import org.omg.CORBA.Object;
 
 import javax.swing.text.html.HTMLDocument;
 import java.util.Iterator;
 
 public class MList<T>  implements Iterable<T>{
 
-    private T[] objects;
+    //private T[] objects;
+    private Object[] objects;
     private int INITIALIZE_SIZE = 100;
     private int size;
 
     public MList() {
-        this.objects = new T[INITIALIZE_SIZE];
+        this.objects = new Object[INITIALIZE_SIZE];
         this.size = -1;
     }
 
@@ -28,7 +28,7 @@ public class MList<T>  implements Iterable<T>{
         if (size + 1 == objects.length) {
             doubleArrayLength();
         }
-        System.out.println(t);
+        //System.out.println(t);
         objects[++size] = t;
     }
 
@@ -80,7 +80,7 @@ public class MList<T>  implements Iterable<T>{
      * Ei lisää alkioita, mutta lisää mahdollisia indeksien määrää.
      */
     public void doubleArrayLength() {
-        T[] arr = (T[] )new Object[objects.length*2];
+        Object[] arr = new Object[objects.length*2];
         for (int i = 0; i < size(); i++) {
             arr[i] = objects[i];
         }
@@ -92,8 +92,8 @@ public class MList<T>  implements Iterable<T>{
      * @param k
      */
     public void increaseArrayLength(int k) {
-        if (k < size()) return;
-        T[] arr = (T[] )new Object[k];
+        if (k < objects.length) return;
+        Object[] arr = new Object[k];
         for (int i = 0; i < size(); i++) {
             arr[i] = objects[i];
         }

@@ -6,7 +6,7 @@ import java.util.Map;
 import java.util.Set;
 
 
-public class Node {
+public class Node implements Comparable<Node> {
 
     private int id;
     private Map<Character, ArrayList<Node>> transfers;
@@ -95,10 +95,23 @@ public class Node {
         return true;
     }
 
+    /**
+     * Solmun tulostus muoto, joka on sen 'NodeId: id'
+     * @return
+     */
     @Override
     public String toString() {
         return "NodeId: " + getId() ;
     }
 
-
+    /**
+     * Node luokan vertailu funktio
+     * Palauttaa kummalla solmulla on pienempi ID
+     * @param o - vertailtava solmu
+     * @return
+     */
+    @Override
+    public int compareTo(Node o) {
+        return getId() - o.getId();
+    }
 }
