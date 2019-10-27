@@ -6,7 +6,13 @@ aabbabababaabababa Tira
 bmaerbämeabamerb--ababababababaaaab--oaerjgäoaerjgaäjeräieojga
 12345678990krrjgkrgäaaäkfmgmffngng--abaaaab--mmmmmmmmmmmm
 ababab
-aaaab
-abababaaab
+aaaab  tämä
+abababaaabtämä
 abbaaaab
-
+tämä hakasulku  Atesti
+toinen tämäWWAtesti
+hakasulku  Btesti
+hakasulku  Ctesti
+hakasulku  Dtesti
+hakasulku  Ptesti
+hakasulku  Rtesti

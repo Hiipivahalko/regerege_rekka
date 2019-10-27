@@ -14,13 +14,17 @@ public class NFABuilder {
     private Stack<LinkedList<Node>> nfaStack;
     private Stack<Character> operatorsStack;
     private char epsilon;
+    private char allChars;
+    private char concatChar;
 
     public NFABuilder() {
         this.nodeId = -1;
         this.inputChars = new HashSet<>();
         this.nfaStack = new Stack<>();
         this.operatorsStack = new Stack<>();
-        this.epsilon = '#';
+        this.epsilon = 0;
+        this.allChars = 1;
+        this.concatChar = 8;
     }
 
     public int getNodeId() {
@@ -67,7 +71,7 @@ public class NFABuilder {
     public Node build(String regex) {
         regex = preprocess(regex);
         for (int i = 0; i < regex.length(); i++) {
-            parseRegex(i, regex.charAt(i));
+            if (parseRegex(i, regex)) i++;
         }
 
         //Toteuta loput operaattori komennot pinosta
@@ -81,9 +85,19 @@ public class NFABuilder {
     }
 
 
-    public void parseRegex(int index, char next) {
-
-        if (!checkIfOperator(next)) {
+    public boolean parseRegex(int index, String regex) {
+        char next = regex.charAt(index);
+        if (next == '\\') {
+            if (index+1 < regex.length()) {
+                push(regex.charAt(index+1));
+                return true;
+            } else {
+                push(next);
+                return false;
+            }
+        } else if (next == '.') {
+            push(allChars);
+        } else if (!checkIfOperator(next)) {
             push(next);
         } else if (operatorsStack.isEmpty()) {
             operatorsStack.push(next);
@@ -99,6 +113,7 @@ public class NFABuilder {
             }
             operatorsStack.push(next);
         }
+        return false;
     }
 
 
@@ -108,7 +123,11 @@ public class NFABuilder {
      * @return
      */
     public boolean checkIfOperator(char c) {
-        return (c == '(' || c == ')' || c == '*' || c == '|' || c == '?');
+        return (c == '(' ||
+                c == ')' ||
+                c == '*' ||
+                c == '|' ||
+                c == concatChar);
     }
 
     /**
@@ -118,19 +137,98 @@ public class NFABuilder {
      */
     public String preprocess(String regex) {
         StringBuilder st = new StringBuilder();
+        regex = breakBrackets(regex);
         for (int i = 0; i < regex.length()-1; i++) {
             char left = regex.charAt(i);
             char right = regex.charAt(i+1);
 
             st.append(left);
-            if (!checkIfOperator(left) || left == ')' || left == '*') {
+            if (left == '\\') {
+                st.append(right);
+                st.append(concatChar);
+                i++;
+            } else if (!checkIfOperator(left) || left == ')' || left == '*') {
                 if (!checkIfOperator(right) || right == '(') {
-                    st.append('?');
+                    st.append(concatChar);
                 }
             }
         }
         st.append(regex.charAt(regex.length()-1));
         return st.toString();
+    }
+
+    /**
+     * Poistaa hakasulut ja muuntaa ne yhdisteiksi säännöllisestä lausekkeesta
+     * esim [abc] -> (a|b|c)
+     * @param regex - säännöllinen lauseke
+     * @return - muokatun säännöllisenlausekkeen (merkkijono)
+     */
+    public String breakBrackets(String regex) {
+        StringBuilder st = new StringBuilder();
+        boolean inBracket = false;
+        for (int i = 0 ; i < regex.length(); i++) {
+            char next = regex.charAt(i);
+            if (next == '[') {
+                st.append('(');
+                inBracket = true;
+            } else if (next == ']') {
+                st.deleteCharAt(st.length()-1);
+                st.append(')');
+                inBracket = false;
+            } else if (inBracket) {
+                if (next == '\\') {
+                    handleEscapeCharInBracket(st, regex, i);
+                    i++;
+                } else if (next == '-') {
+                    st = handleLineSymbolInBracket(st, regex, i);
+                    i++;
+                } else {
+                    st.append(next);
+                    st.append('|');
+                }
+            } else st.append(next);
+        }
+        return st.toString();
+    }
+
+    /**
+     * Käsittelee hakasulkujen viiva operaation eli jos hakasulkujen sisällä on
+     * [a-d], niin funktio käsittelee tämän ja tekee siitä (a|b|c|d)
+     * @param st
+     * @param regex
+     * @param i
+     * @return
+     */
+    private StringBuilder handleLineSymbolInBracket(StringBuilder st, String regex, int i) {
+        if (i > 0 && i+1 < regex.length() &&
+                regex.charAt(i+1) != ']') {
+            if (regex.charAt(i-1) < regex.charAt(i+1)) {
+                int startSymbol = (int) regex.charAt(i-1) +1;
+                for (int j = startSymbol; j <= regex.charAt(i+1); j++) {
+                    st.append((char) j);
+                    st.append('|');
+                }
+            }
+        }
+        return st;
+    }
+
+    /**
+     * Käsittelee hakasulkujen sisällä olvena escape merkin
+     * @param st - StringBuilder joka esikäittelee säännllistälauseketta
+     * @param regex - alkuperäinen säännöllinen lauseke
+     * @param i - alkuperäisen säännöllisen lausekkeen symboli indeksi
+     * @return - StringBuilder johon on lisätty escape merkattu symboli
+     */
+    private StringBuilder handleEscapeCharInBracket(StringBuilder st, String regex ,int i) {
+        if (i+1 < regex.length()) {
+            st.append(regex.charAt(i+1));
+            st.append('|');
+        } else {
+            System.out.println("syntax eror with regex");
+            System.exit(1);
+        }
+        return st;
     }
 
     /**
@@ -141,12 +239,15 @@ public class NFABuilder {
             char operator = operatorsStack.pop();
 
             switch (operator) {
-                case '?':
+                // 8 == concatChar
+                case 8:
                     concat();
                     break;
+                    //124 == unionChar
                 case 124:
                     union();
                     break;
+                    // 42== starChar
                 case 42:
                     star();
                     break;
@@ -231,16 +332,16 @@ public class NFABuilder {
         nfaStack.push(nfaA);
     }
 
-    public static boolean precedence(char left, char right) {
+    public boolean precedence(char left, char right) {
         if(left == right) {
             return true;
         } else if(left == '*') {
             return false;
         } else if(right == '*') {
             return true;
-        } else if(left == '?') {
+        } else if(left == concatChar) {
             return false;
-        } else if(right == '?') {
+        } else if(right == concatChar) {
             return true;
         } else if(left == '|') {
             return false;

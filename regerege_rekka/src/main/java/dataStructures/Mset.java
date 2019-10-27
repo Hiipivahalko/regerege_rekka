@@ -1,14 +1,13 @@
 package dataStructures;
 
 import java.util.Iterator;
-import java.util.PriorityQueue;
 
-public class Mset<T> implements Iterable<T> {
+public class Mset<T extends Comparable<T>> implements Iterable<T> {
 
     private MList<LinkNode<T>>[] hashArray;
     private int size;
     private final int N =  1002257;
-    private PriorityQueue<T> objects;
+    private MPriorityQueue<T> objects;
 
     /**
      * Uusi joukko olio
@@ -16,10 +15,10 @@ public class Mset<T> implements Iterable<T> {
     public Mset() {
         this.hashArray = new MList[this.N];
         this.size = 0;
-        this.objects = new PriorityQueue<>();
+        this.objects = new MPriorityQueue<>();
     }
 
-    public PriorityQueue<T> getObjects() {
+    public MPriorityQueue<T> getObjects() {
         return objects;
     }
 
@@ -28,8 +27,8 @@ public class Mset<T> implements Iterable<T> {
      * @param hashcode - objektin oma hajautusarvo
      * @return - hajautustaulun indeksi
      */
-    private int hashFunction(int hashcode) {
-        return hashcode % N;
+    private int hashFunction(T hashcode) {
+        return Math.abs(hashcode.hashCode()) % N;
     }
 
     /**
@@ -46,7 +45,7 @@ public class Mset<T> implements Iterable<T> {
      * @param t
      */
     public void add(T t) {
-        int key = hashFunction(t.hashCode());
+        int key = hashFunction(t);
         LinkNode<T> nextNode = new LinkNode<>(t,null,null);
 
         if (hashArray[key] == null) {
@@ -69,6 +68,28 @@ public class Mset<T> implements Iterable<T> {
                 size++;
             }
         }
+    }
+
+    /**
+     * Tarkistetaan onko kysytty objekti joukossa
+     * @param key - kysytty objekti
+     * @return - true jos on, muuten false
+     */
+    public boolean contains(T key) {
+
+        int hash = hashFunction(key);
+
+        if (hashArray[hash] != null) {
+            if (hashArray[hash].size() == 1 && hashArray[hash].get(0).getKey() == key) {
+                return true;
+            } else {
+                for (LinkNode<T> ln : hashArray[hash]) {
+                    if (ln.getKey() == key) return true;
+                }
+            }
+        }
+
+        return false;
     }
 
     /**
@@ -95,8 +116,8 @@ public class Mset<T> implements Iterable<T> {
 
         if (this.size != s.size) return false;
 
-        PriorityQueue<T> tempThis = objects;
-        PriorityQueue<T> tempComp = s.getObjects();
+        MPriorityQueue<T> tempThis = objects;
+        MPriorityQueue<T> tempComp = s.getObjects();
 
         while (!tempThis.isEmpty()) {
             T t = tempThis.poll();
@@ -105,5 +126,20 @@ public class Mset<T> implements Iterable<T> {
         }
 
         return true;
+    }
+
+    /**
+     * Kertoo joukon oman hajautusarvon
+     * @return
+     */
+    @Override
+    public int hashCode() {
+        Iterator it = objects.iterator();
+        int hash = 0;
+        int a = 7;
+        while (it.hasNext()) {
+            hash = (hash * a + (int) it.next().hashCode()) % N;
+        }
+        return hash;
     }
 }

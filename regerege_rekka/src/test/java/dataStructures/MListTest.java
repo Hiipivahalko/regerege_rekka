@@ -79,6 +79,40 @@ public class MListTest {
         assertTrue(list.get(50) == num);
     }
 
+
+    /**
+     * Yritetään ottaa objektia listan ulkopuolelta
+     */
+    @Test
+    public void get3() {
+        boolean fail = false;
+        int num = 4;
+        try {
+            num = list.get(3);
+        } catch (Exception e) {
+            fail = true;
+        }
+
+        assertTrue(fail);
+        assertTrue(num == 4);
+
+        list.add(3);
+        list.add(10);
+
+        boolean fail2 = false;
+
+        try {
+            num = list.get(3);
+        } catch (Exception e) {
+            fail2 = true;
+        }
+
+        assertTrue(fail2);
+        assertTrue(num == 4);
+        assertTrue(list.size() == 2);
+        assertTrue(list.get(0) == 3);
+    }
+
     /**
      * Testataa listasta objektin poistoa
      */
@@ -125,6 +159,36 @@ public class MListTest {
     }
 
     /**
+     * Yritetään poistaa listan ulkopuolelta objekteja
+     */
+    @Test
+    public void remove3() {
+        assertTrue(list.size() == 0);
+        boolean fail = false;
+        try {
+            list.remove(0);
+        } catch (Exception e) {
+            fail = true;
+        }
+
+        assertTrue(list.size() == 0);
+        assertTrue(fail);
+
+        list.add(3);
+        list.add(5);
+        boolean fail2 = false;
+        assertTrue(list.size() == 2);
+        try {
+            list.remove(2);
+        } catch (Exception e) {
+            fail2 = true;
+        }
+
+        assertTrue(list.size() == 2);
+        assertTrue(fail2);
+    }
+
+    /**
      * Testataan listan indeksien tuplaamista
      */
     @Test
@@ -160,6 +224,28 @@ public class MListTest {
     }
 
     /**
+     * testataan että listan indeksit eivät kasva, kun yritetään kasvattaa
+     * indeksii joka on vähemmän kuin nykyinen
+     */
+    @Test
+    public void increaseArrayLength2() {
+        assertTrue(list.size() == 0);
+
+        list.increaseArrayLength(50);
+
+        assertTrue(list.size() == 0);
+
+        list.add(5);
+        list.add(10);
+
+        assertTrue(list.size() == 2);
+
+        list.increaseArrayLength(50);
+        assertTrue(list.size() == 2);
+        assertTrue(list.get(0) == 5 && list.get(1) ==10);
+    }
+
+    /**
      * Testaan että listan iterointi etenee odotetulla tavalla
      * eli listan alusta loppuun
      */
@@ -176,5 +262,41 @@ public class MListTest {
             assertTrue(list.get(i) == idx);
             idx++;
         }
+    }
+
+    /**
+     * Testataan objektin vaihtoa toiseksi
+     */
+    @Test
+    public void set() {
+        assertTrue(list.size() == 0);
+        list.add(5);
+        assertTrue(list.size() == 1);
+        assertTrue(list.get(0) == 5);
+
+        list.set(0, 33);
+        assertTrue(list.size() == 1);
+        assertTrue(list.get(0) == 33);
+    }
+
+    /**
+     * Testataan asettaa objektia listan ulkopuolelta ,mutta epäonnistumme
+     */
+    @Test
+    public void set2() {
+        assertTrue(list.size() == 0);
+        list.add(5);
+        assertTrue(list.size() == 1);
+        assertTrue(list.get(0) == 5);
+
+        boolean fail = false;
+        try {
+            list.set(50,40);
+        } catch (Exception e) {
+            fail = true;
+        }
+        assertTrue(list.size() == 1);
+        assertTrue(list.get(0) == 5);
+
     }
 }

@@ -24,7 +24,7 @@ public class DFABuilderTest {
     private Node node2 = new Node(2);
     private Node node3 = new Node(3);
     private Node node4 = new Node(4);
-    private char epsilonChar = '#';
+    private char epsilonChar = 0;
 
     @Before
     public void setUp() throws Exception {
@@ -126,5 +126,37 @@ public class DFABuilderTest {
 
         Set<Node> res2 = dfa2.transferWhitChar('k', epsilons2);
         assertTrue(res2.size() == 0);
+    }
+
+    /**
+     * Testataan että dfa:n aloitus solmu saa halutun arvo
+     */
+    @Test
+    public void DFAStartNodeFromNFA() {
+        Node startDFANode = dfa2.DFAStartNodeFromNFA(nfaStartNode2);
+        assertTrue(startDFANode.getNodeSet().size() == 1);
+
+        for (Node node : startDFANode.getNodeSet()) {
+            assertTrue(node.getTransfers().get('t') != null);
+        }
+    }
+
+    /**
+     * Tarkistetaan että dfa:n aloitus solmu halutunlainen
+     * säännöllisellä lausekkeella on '*' sekä '\' aloitusrakenne,
+     * ensimmäiselle solmulle
+     */
+    @Test
+    public void DFAStartNodeFromNFA2() {
+        Node start = dfa.DFAStartNodeFromNFA(nfaStartNode1);
+        boolean jMove = false;
+        boolean hMove = false;
+        for (Node node : start.getNodeSet()) {
+            if (node.getTransfers().get('j') != null) jMove = true;
+            if (node.getTransfers().get('h') != null) hMove = true;
+        }
+        assertTrue(start.getNodeSet().size() == 6);
+        assertTrue(jMove);
+        assertTrue(hMove);
     }
 }

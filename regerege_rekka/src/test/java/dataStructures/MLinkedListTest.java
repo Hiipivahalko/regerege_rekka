@@ -168,6 +168,26 @@ public class MLinkedListTest {
         assertTrue(list1.getFirst() == null && list1.getLast() == null);
     }
 
+    /**
+     * Yritetään poistaa viimeistä lukua listalta, mutta lista on tyhjä
+     */
+    @Test
+    public void popLast4() {
+        boolean fail = false;
+        list1.addFirst(1);
+        assertTrue(list1.size() == 1);
+        list1.popFirst();
+        assertTrue(list1.getFirst() == null && list1.getLast() == null);
+        assertTrue(list1.size() == 0);
+        try {
+            int num = list1.popLast();
+        } catch (Exception e) {
+            fail = true;
+        }
+
+        assertTrue(fail);
+    }
+
     @Test
     public void popFirst() {
         assertTrue(list1.size() == 0);
@@ -227,6 +247,29 @@ public class MLinkedListTest {
         assertTrue(res3 == i3);
         assertTrue(list1.size() == 0);
         assertTrue(list1.getFirst() == null && list1.getLast() == null);
+    }
+
+    /**
+     * Yritetään poistaa listan ensimmäinen alkio,
+     * mutta lista tyhjä
+     */
+    @Test
+    public void popFirst4() {
+        boolean fail = false;
+        assertTrue(list1.size() == 0);
+        list1.addFirst(5);
+        assertTrue(list1.size() == 1);
+        list1.popLast();
+        assertTrue(list1.size() == 0);
+        int num = 9;
+        assertTrue(list1.getFirst() == null && list1.getLast() == null);
+        try {
+            num = list1.popFirst();
+        } catch (Exception e) {
+            fail = true;
+        }
+        assertTrue(fail);
+        assertTrue(list1.size() == 0);
     }
 
     @Test

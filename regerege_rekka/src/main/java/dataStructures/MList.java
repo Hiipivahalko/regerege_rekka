@@ -39,10 +39,11 @@ public class MList<T>  implements Iterable<T>{
      */
     public T get(int k) {
         if (k >= size()) {
-            System.out.println("Error: tried to get elements out of the range from MList");
+            throw new IndexOutOfBoundsException();
+            /*System.out.println("Error: tried to get elements out of the range from MList");
             System.out.println("range was: [" + 0 + "-" + (size-1) + "]");
             System.out.println("Tried to get element of " + k);
-            System.exit(1);
+            System.exit(1);*/
         }
         T val = (T) objects[k];
 
@@ -55,17 +56,17 @@ public class MList<T>  implements Iterable<T>{
      */
     public void remove(int k) {
         if (k >= size()) {
-            System.out.println("Error: tried to get elements out of the range from MList");
-            System.out.println("range was: [" + 0 + "-" + (size-1) + "]");
-            System.out.println("Tried to get element of " + k);
-            System.exit(1);
+            throw new IndexOutOfBoundsException();
+        } else {
+            for (int i = k+1; i < size(); i++) {
+                objects[i-1] = objects[i];
+            }
+            size--;
         }
-        for (int i = k+1; i < size(); i++) {
-            objects[i-1] = objects[i];
-        }
-        size--;
+
 
     }
+
 
     /**
      * Kertoo kuinka monta alkiota listassa on
@@ -98,7 +99,6 @@ public class MList<T>  implements Iterable<T>{
             arr[i] = objects[i];
         }
         objects = arr;
-
     }
 
     /**
@@ -121,5 +121,12 @@ public class MList<T>  implements Iterable<T>{
             }
         };
         return it;
+    }
+
+    public void set(int k, T update) {
+        if (k >= size()) {
+            throw new IndexOutOfBoundsException();
+        }
+        objects[k] = update;
     }
 }

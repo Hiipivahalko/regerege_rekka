@@ -11,8 +11,8 @@ public class DFABuilder {
     private Set<Character> inputChars;
     private Stack<Node> unprocessedDFANodes;
     private char epsilon;
+    private char allChars;
     private boolean isGoalNode;
-    private Node NFAStartNode;
     private Map<Set<Node>, Node> dfaNodes;
 
 
@@ -27,7 +27,8 @@ public class DFABuilder {
         this.allDFANodes = new LinkedList<>();
         this.inputChars = inputChars;
         this.unprocessedDFANodes = new Stack<>();
-        this.epsilon = '#';
+        this.epsilon = 0;
+        this.allChars = 1;
         this.isGoalNode = false;
         this.dfaNodes = new HashMap<>();
     }

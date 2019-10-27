@@ -25,6 +25,7 @@ public class MsetTest {
         assertTrue(mySet.size() == 1);
 
         for (int i : mySet) {
+            //System.out.println("--------------------: " + i);
             assertTrue(i == 1);
         }
     }
@@ -66,6 +67,7 @@ public class MsetTest {
         for (int i : mySet) {
             j++;
         }
+        //System.out.println("------------------:" + j);
         assertTrue(j == mySet.size());
 
         assertTrue(mySet.size() == 2);
@@ -104,5 +106,53 @@ public class MsetTest {
         s.add(1);
 
         assertTrue(!mySet.equals(s));
+    }
+
+    /**
+     * tarkistetaan joukon oma hasharvo
+     */
+    @Test
+    public void testHashCode() {
+        int hash = 40709;
+
+        Mset<Character> chSet = new Mset<>();
+        assertTrue(chSet.size() == 0);
+        chSet.add('t');
+        chSet.add('e');
+        chSet.add('s');
+        chSet.add('i');
+
+        assertTrue(chSet.size() == 4);
+        assertTrue(chSet.hashCode() == hash);
+    }
+
+    /**
+     * Testataan onko joukossa tietty objekti jo valmiiksi
+     */
+    @Test
+    public void contains() {
+        assertTrue(mySet.size() == 0);
+
+        mySet.add(5);
+        boolean isIt = mySet.contains(5);
+        boolean isIt2 = mySet.contains(10);
+
+        assertTrue(isIt);
+        assertTrue(!isIt2);
+    }
+
+    /**
+     * Testataan että joukosta löytyy objektit jolla on samat hajautusarvot
+     */
+    @Test
+    public void constains2() {
+        Mset<String> sSet = new Mset<>();
+
+        assertTrue(sSet.size() == 0);
+        sSet.add("Ea");
+        sSet.add("FB");
+
+        assertTrue(sSet.contains("FB"));
+        assertTrue(sSet.contains("Ea"));
     }
 }

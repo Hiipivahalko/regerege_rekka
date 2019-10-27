@@ -59,9 +59,7 @@ public class MLinkedList<T> {
      */
     public T popLast() {
         if (last.getKey() == null) {
-            System.out.println("Error with popLast method MLinkedList<" + first.getClass()
-                    + ">, Object was NULL");
-            System.exit(1);
+            throw new NullPointerException();
         }
 
         T value = last.getKey();
@@ -79,10 +77,9 @@ public class MLinkedList<T> {
      * @return - metodi palauttaa poistetun alkion
      */
     public T popFirst() {
-        if (first == null) {
-            System.out.println("Error with popFirst method at MLinkedList<" + first.getClass()
-                    + ">, Object was NULL");
-            System.exit(1);
+        if (first.getKey() == null) {
+            throw new NullPointerException();
+
         }
 
         T value = first.getKey();

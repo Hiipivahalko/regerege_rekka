@@ -15,6 +15,7 @@ public class Finder {
     private boolean insideGraph;
     private final String  ANSI_RED  = "\u001B[31m";
     private final String  ANSI_NORMAL = "\u001B[0m";
+    private final char allChars = 1;
     //private StringBuilder builder;
 
     /**
@@ -29,6 +30,27 @@ public class Finder {
         this.rightIdx = 0;
         this.insideGraph = false;
     }
+
+    //////// GETTERIT
+
+    public Node getStartNode() {
+        return startNode;
+    }
+
+    public int getIdx() {
+        return idx;
+    }
+
+    public Node getCurrNode() {
+        return currNode;
+    }
+
+    public boolean isInsideGraph() {
+        return insideGraph;
+    }
+
+
+
 
     /**
      * Käy läpi DFA-verkkoa annetulla merkkijonolla
@@ -65,8 +87,15 @@ public class Finder {
         if (!insideGraph) leftIdx = idx;
         insideGraph = true;
         if (currNode.getTransfers().get(currChar) == null) {
-            insideGraph = false;
-            currNode = startNode;
+            if (currNode.getTransfers().get(allChars)  != null) {
+                currNode = currNode.getTransfers().get(allChars).get(0);
+                if (currNode.isGoalNode()) {
+                    return true;
+                }
+            } else {
+                insideGraph = false;
+                currNode = startNode;
+            }
         } else {
             if (currNode.getTransfers().get(currChar).size() == 1) {
                 currNode = currNode.getTransfers().get(currChar).get(0);
@@ -74,13 +103,10 @@ public class Finder {
                 System.out.println("DFA build wrong");
                 System.exit(1);
             }
-
             if (currNode.isGoalNode()) {
                 return true;
             }
-
         }
         return false;
     }
-
 }
