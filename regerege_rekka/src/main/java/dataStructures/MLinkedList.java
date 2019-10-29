@@ -1,6 +1,8 @@
 package dataStructures;
 
-public class MLinkedList<T> {
+import java.util.Iterator;
+
+public class MLinkedList<T> implements Iterable<T> {
 
     private LinkNode<T> last;
     private LinkNode<T> first;
@@ -95,7 +97,7 @@ public class MLinkedList<T> {
      * Palauttaa listan ensimmäisen alkion
      * @return
      */
-    public T getFirst() {
+    public T getFirstKey() {
         return first.getKey();
     }
 
@@ -103,7 +105,7 @@ public class MLinkedList<T> {
      * Palauttaa listan viimeisen alkon
      * @return
      */
-    public T getLast() {
+    public T getLastKey() {
         return last.getKey();
     }
 
@@ -113,5 +115,43 @@ public class MLinkedList<T> {
      */
     public int size() {
         return size;
+    }
+
+    /**
+     * Lisätään toinen linkitettylistan objektit listan loppuun
+     * @param toCopy - kopioitava linkitettylista
+     */
+    public void addAll(MLinkedList<T> toCopy) {
+        Iterator it = toCopy.iterator();
+
+        while (it.hasNext()) {
+            addLast((T) it.next());
+        }
+    }
+
+    /**
+     * linkitetynlistan iterointi ensimmäisestä objektista viimeiseen
+     * @return
+     */
+    @Override
+    public Iterator<T> iterator() {
+
+        Iterator<T> it = new Iterator<T>() {
+
+            LinkNode<T> curr = first;
+            @Override
+            public boolean hasNext() {
+                if (curr.getNext() == null) return false;
+                return true;
+            }
+
+            @Override
+            public T next() {
+                T value = curr.getKey();
+                curr = curr.getNext();
+                return value;
+            }
+        };
+        return it;
     }
 }

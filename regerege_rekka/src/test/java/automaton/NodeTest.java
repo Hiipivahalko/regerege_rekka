@@ -34,8 +34,4 @@ public class NodeTest {
         assertTrue(node.getTransfers().get('a').size() == 2);
     }
 
-    @Test
-    public void addTransfer1() {
-    }
-
 }

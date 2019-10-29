@@ -113,14 +113,11 @@ public class FinderTest {
         start = process.buildAutomaton(regex3);
 
         finder = new Finder(start);
-
         String good1 = "abaa";
         String good2 = "ababaa";
         String good3 = "jeeabaa";
         String good4 = "ababababababababababababababababababaa";
         String good5 = "abaaaaaaaaaa";
-        //String good6 = "aa";
-
         String bad1 = "baa";
         String bad2 = "aab";
         String bad3 = "ab";
@@ -129,15 +126,10 @@ public class FinderTest {
         String bad6 = "a baa";
         String bad7 = "aa";
 
-        // hyväksyty rivit
-        assertTrue(finder.findSubstring(good1));
-        assertTrue(finder.findSubstring(good2));
-        assertTrue(finder.findSubstring(good3));
-        assertTrue(finder.findSubstring(good4));
-        assertTrue(finder.findSubstring(good5));
-        //assertTrue(finder.findSubstring(good6));
+        assertTrue(finder.findSubstring(good1) && finder.findSubstring(good2) &&
+                finder.findSubstring(good3) && finder.findSubstring(good4) &&
+                finder.findSubstring(good5));
 
-        // ei hyväksytyt rivit
         assertTrue(!finder.findSubstring(bad1));
         assertTrue(!finder.findSubstring(bad2));
         assertTrue(!finder.findSubstring(bad3));
@@ -153,7 +145,6 @@ public class FinderTest {
     @Test
     public void findSubstring4() {
         start = process.buildAutomaton("joo.*joo");
-
         finder = new Finder(start);
 
         String good1 = "joojoo";
@@ -161,7 +152,6 @@ public class FinderTest {
         String good3 = "joo mfewpiofmaweöpfiomawöefiomaweöäfmieäfmefäpomepä joo";
         String good4 = "joo tähän voi laittaa mitä vain joo";
         String good5 = "joo aaaaaaaaaaaaaa joo";
-
         String bad1 = "joo";
         String bad2 = "joojo";
         String bad3 = "joogsergsmerägosergmospermgäe";
@@ -170,14 +160,10 @@ public class FinderTest {
         String bad6 = "oojooj";
         String bad7 = "jojo";
 
-        // hyväksyty rivit
-        assertTrue(finder.findSubstring(good1));
-        assertTrue(finder.findSubstring(good2));
-        assertTrue(finder.findSubstring(good3));
-        assertTrue(finder.findSubstring(good4));
-        assertTrue(finder.findSubstring(good5));
+        assertTrue(finder.findSubstring(good1) && finder.findSubstring(good2) &&
+                finder.findSubstring(good3) && finder.findSubstring(good4) &&
+                finder.findSubstring(good5));
 
-        // ei hyväksytyt rivit
         assertTrue(!finder.findSubstring(bad1));
         assertTrue(!finder.findSubstring(bad2));
         assertTrue(!finder.findSubstring(bad3));
@@ -213,21 +199,15 @@ public class FinderTest {
     @Test
     public void findSubstring6() {
         String regex = "moi|testi";
-
         start = process.buildAutomaton(regex);
-
         Finder finder = new Finder(start);
-
         String good1 = "moi";
         String good2 = "testi";
-
         String bad1 = "mo";
         String bad2 = "test";
         String bad3 = "oi";
-
         assertTrue(finder.findSubstring(good1));
         assertTrue(finder.findSubstring(good2));
-
         assertTrue(!finder.findSubstring(bad1));
         assertTrue(!finder.findSubstring(bad2));
         assertTrue(!finder.findSubstring(bad3));

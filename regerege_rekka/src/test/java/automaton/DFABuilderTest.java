@@ -37,7 +37,7 @@ public class DFABuilderTest {
     }
 
     /**
-     * Testataan NFA1 verkon tulosolmulle epsilonTransfers metodia,
+     * Testataan NFA1 verkon tulosolmulle epsilonTransfers funktiota,
      * jotta päästään tarpeeksi moneen solmuun
      */
     @Test
@@ -48,8 +48,8 @@ public class DFABuilderTest {
         assertTrue(s1.size() == 1);
 
         Set<Node> epsilons1 = dfa.epsilonTransfers(s1);
+        //System.out.println(epsilons1.size());
         assertTrue(epsilons1.size() == 6);
-
 
     }
 

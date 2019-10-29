@@ -49,6 +49,7 @@ public class NFABuilderTest {
         String answer2 = "t" + concatChar + "e" + concatChar + "s" + concatChar + "t";
 
         String result3 = nb.preprocess(regex3);
+        //String answer3 = "t*?e?s?t";
         String answer3 = "t*" + concatChar + "e" + concatChar + "s" + concatChar + "t";
 
         assertEquals(result1, answer1);

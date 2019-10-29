@@ -25,8 +25,8 @@ public class MLinkedListTest {
         int next = 5;
         list1.addLast(next);
         assertTrue(list1.size() == 1);
-        assertTrue(list1.getLast() == next);
-        assertTrue(list1.getFirst() == next);
+        assertTrue(list1.getLastKey() == next);
+        assertTrue(list1.getFirstKey() == next);
     }
 
     @Test
@@ -39,11 +39,11 @@ public class MLinkedListTest {
             list1.addLast(next);
         }
         assertTrue(list1.size() == 101);
-        assertTrue(list1.getLast() == next);
+        assertTrue(list1.getLastKey() == next);
         int next2 = r.nextInt();
         list1.addLast(next2);
-        assertTrue(list1.getLast() == next2);
-        assertTrue(list1.getFirst() == first);
+        assertTrue(list1.getLastKey() == next2);
+        assertTrue(list1.getFirstKey() == first);
 
     }
 
@@ -55,12 +55,12 @@ public class MLinkedListTest {
         int third = r.nextInt();
         list1.addLast(first);
         list1.addLast(second);
-        assertTrue(second == list1.getLast());
-        assertTrue(first == list1.getFirst());
+        assertTrue(second == list1.getLastKey());
+        assertTrue(first == list1.getFirstKey());
 
         list1.addLast(third);
-        assertTrue(third == list1.getLast());
-        assertTrue(first == list1.getFirst());
+        assertTrue(third == list1.getLastKey());
+        assertTrue(first == list1.getFirstKey());
     }
 
 
@@ -70,8 +70,8 @@ public class MLinkedListTest {
         int next = 10;
         list1.addFirst(next);
         assertTrue(list1.size() == 1);
-        assertTrue(list1.getLast() == next);
-        assertTrue(list1.getFirst() == next);
+        assertTrue(list1.getLastKey() == next);
+        assertTrue(list1.getFirstKey() == next);
 
     }
 
@@ -85,11 +85,11 @@ public class MLinkedListTest {
             list1.addFirst(next);
         }
         assertTrue(list1.size() == 101);
-        assertTrue(list1.getFirst() == next);
+        assertTrue(list1.getFirstKey() == next);
         int next2 = 6;
         list1.addFirst(next2);
-        assertTrue(list1.getFirst() == next2);
-        assertTrue(list1.getLast() == 101);
+        assertTrue(list1.getFirstKey() == next2);
+        assertTrue(list1.getLastKey() == 101);
     }
 
     @Test
@@ -100,12 +100,12 @@ public class MLinkedListTest {
         int third = r.nextInt();
         list1.addFirst(first);
         list1.addFirst(second);
-        assertTrue(second == list1.getFirst());
-        assertTrue(first == list1.getLast());
+        assertTrue(second == list1.getFirstKey());
+        assertTrue(first == list1.getLastKey());
 
         list1.addFirst(third);
-        assertTrue(third == list1.getFirst());
-        assertTrue(first == list1.getLast());
+        assertTrue(third == list1.getFirstKey());
+        assertTrue(first == list1.getLastKey());
     }
 
     @Test
@@ -115,18 +115,18 @@ public class MLinkedListTest {
         int next2 = 9;
 
         list1.addLast(next);
-        assertTrue(list1.getLast() == list1.getFirst() && list1.getFirst() == next);
+        assertTrue(list1.getLastKey() == list1.getFirstKey() && list1.getFirstKey() == next);
         list1.addLast(next2);
 
         int res = list1.popLast();
         assertTrue(res == next2);
         assertTrue(list1.size() != 0);
-        assertTrue(list1.getFirst() != null && list1.getLast() != null);
+        assertTrue(list1.getFirstKey() != null && list1.getLastKey() != null);
         int res2 = list1.popLast();
         assertTrue(res2 == next);
 
         assertTrue(list1.size() == 0);
-        assertTrue(list1.getFirst() == null && list1.getLast() == null);
+        assertTrue(list1.getFirstKey() == null && list1.getLastKey() == null);
     }
 
     @Test
@@ -143,7 +143,7 @@ public class MLinkedListTest {
         assertTrue(res2 == i2);
 
         assertTrue(list1.size() == 0);
-        assertTrue(list1.getFirst() == null && list1.getLast() == null);
+        assertTrue(list1.getFirstKey() == null && list1.getLastKey() == null);
     }
 
     @Test
@@ -161,11 +161,11 @@ public class MLinkedListTest {
         assertTrue(res1 == i2);
         int res2 = list1.popLast();
         assertTrue(res2 == i1);
-        assertTrue(list1.getLast() == list1.getFirst());
+        assertTrue(list1.getLastKey() == list1.getFirstKey());
         int res3 = list1.popLast();
         assertTrue(res3 == i3);
         assertTrue(list1.size() == 0);
-        assertTrue(list1.getFirst() == null && list1.getLast() == null);
+        assertTrue(list1.getFirstKey() == null && list1.getLastKey() == null);
     }
 
     /**
@@ -177,7 +177,7 @@ public class MLinkedListTest {
         list1.addFirst(1);
         assertTrue(list1.size() == 1);
         list1.popFirst();
-        assertTrue(list1.getFirst() == null && list1.getLast() == null);
+        assertTrue(list1.getFirstKey() == null && list1.getLastKey() == null);
         assertTrue(list1.size() == 0);
         try {
             int num = list1.popLast();
@@ -195,18 +195,18 @@ public class MLinkedListTest {
         int next2 = 9;
 
         list1.addFirst(next);
-        assertTrue(list1.getLast() == list1.getLast() && list1.getLast() == next);
+        assertTrue(list1.getLastKey() == list1.getLastKey() && list1.getLastKey() == next);
         list1.addFirst(next2);
 
         int res = list1.popFirst();
         assertTrue(res == next2);
         assertTrue(list1.size() != 0);
-        assertTrue(list1.getFirst() != null && list1.getLast() != null);
+        assertTrue(list1.getFirstKey() != null && list1.getLastKey() != null);
         int res2 = list1.popFirst();
         assertTrue(res2 == next);
 
         assertTrue(list1.size() == 0);
-        assertTrue(list1.getFirst() == null && list1.getLast() == null);
+        assertTrue(list1.getFirstKey() == null && list1.getLastKey() == null);
 
     }
 
@@ -224,7 +224,7 @@ public class MLinkedListTest {
         assertTrue(res2 == i2);
 
         assertTrue(list1.size() == 0);
-        assertTrue(list1.getFirst() == null && list1.getLast() == null);
+        assertTrue(list1.getFirstKey() == null && list1.getLastKey() == null);
     }
 
     @Test
@@ -242,11 +242,11 @@ public class MLinkedListTest {
         assertTrue(res1 == i2);
         int res2 = list1.popFirst();
         assertTrue(res2 == i1);
-        assertTrue(list1.getLast() == list1.getFirst());
+        assertTrue(list1.getLastKey() == list1.getFirstKey());
         int res3 = list1.popFirst();
         assertTrue(res3 == i3);
         assertTrue(list1.size() == 0);
-        assertTrue(list1.getFirst() == null && list1.getLast() == null);
+        assertTrue(list1.getFirstKey() == null && list1.getLastKey() == null);
     }
 
     /**
@@ -262,7 +262,7 @@ public class MLinkedListTest {
         list1.popLast();
         assertTrue(list1.size() == 0);
         int num = 9;
-        assertTrue(list1.getFirst() == null && list1.getLast() == null);
+        assertTrue(list1.getFirstKey() == null && list1.getLastKey() == null);
         try {
             num = list1.popFirst();
         } catch (Exception e) {
@@ -295,8 +295,30 @@ public class MLinkedListTest {
         assertTrue(res3 == i2);
 
         assertTrue(list1.size() == 0);
-        assertTrue(list1.getFirst() == null && list1.getLast() == null);
+        assertTrue(list1.getFirstKey() == null && list1.getLastKey() == null);
     }
 
+    /**
+     * Testataan toisen linkitetynlistan objektien lisäämistä toisen loppuun
+     */
+    @Test
+    public void addAll() {
+        assertTrue(list1.size() == 0);
 
+        list1.addFirst(5);
+        list1.addFirst(90);
+
+        assertTrue(list1.size() == 2);
+
+        MLinkedList<Integer> toCopy = new MLinkedList<>();
+        toCopy.addFirst(1);
+        toCopy.addFirst(4);
+
+        assertTrue(toCopy.size() == 2);
+
+        list1.addAll(toCopy);
+        assertTrue(list1.size() == 4);
+        assertTrue(list1.getFirstKey() == 90);
+        assertTrue(list1.getLastKey() == 1);
+    }
 }
