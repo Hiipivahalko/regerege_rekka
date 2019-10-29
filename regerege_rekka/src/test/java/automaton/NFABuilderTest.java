@@ -2,12 +2,11 @@ package automaton;
 
 
 import automaton.node.Node;
+import dataStructures.MList;
 import dataStructures.Mstack;
 import org.junit.*;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.Stack;
 
 import static org.junit.Assert.*;
 
@@ -98,7 +97,7 @@ public class NFABuilderTest {
         int id2 = nb.getNfaStack().peek().get(0).getId();
 
         nb.union();
-        ArrayList<Node> startNode_moves = nb.getNfaStack().peek().get(0).getTransfers().get(epsilonMove);
+        MList<Node> startNode_moves = nb.getNfaStack().peek().get(0).getTransfers().get(epsilonMove);
 
         assertTrue(nb.getNfaStack().size() == 1);
         assertTrue(nb.getNfaStack().peek().size() == 6);

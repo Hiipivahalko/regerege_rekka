@@ -1,6 +1,7 @@
 package automaton.node;
 
-import java.util.ArrayList;
+import dataStructures.MList;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -9,7 +10,7 @@ import java.util.Set;
 public class Node implements Comparable<Node> {
 
     private int id;
-    private Map<Character, ArrayList<Node>> transfers;
+    private Map<Character, MList<Node>> transfers;
     private boolean isGoalNode;
     private Set<Node> nodeSet;
 
@@ -38,7 +39,7 @@ public class Node implements Comparable<Node> {
         return id;
     }
 
-    public Map<Character, ArrayList<Node>> getTransfers() {
+    public Map<Character, MList<Node>> getTransfers() {
         return transfers;
     }
 
@@ -61,7 +62,7 @@ public class Node implements Comparable<Node> {
      */
     public void addTransfer(Node n, char c) {
         if (!transfers.containsKey(c)) {
-            transfers.put(c, new ArrayList<Node>());
+            transfers.put(c, new MList<Node>());
         }
         transfers.get(c).add(n);
 
