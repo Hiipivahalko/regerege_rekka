@@ -1,30 +1,32 @@
 package automaton;
 
 import automaton.node.Node;
+import dataStructures.Mstack;
 
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Set;
-import java.util.Stack;
 
 public class NFABuilder {
 
     private int nodeId;
     private Set<Character> inputChars;
-    private Stack<LinkedList<Node>> nfaStack;
-    private Stack<Character> operatorsStack;
     private char epsilon;
     private char allChars;
     private char concatChar;
 
+    private Mstack<LinkedList<Node>> nfaStack;
+    private Mstack<Character> operatorsStack;
+
     public NFABuilder() {
         this.nodeId = -1;
         this.inputChars = new HashSet<>();
-        this.nfaStack = new Stack<>();
-        this.operatorsStack = new Stack<>();
         this.epsilon = 0;
         this.allChars = 1;
         this.concatChar = 8;
+
+        this.nfaStack = new Mstack<>();
+        this.operatorsStack = new Mstack<>();
     }
 
     public int getNodeId() {
@@ -35,11 +37,11 @@ public class NFABuilder {
         return inputChars;
     }
 
-    public Stack<LinkedList<Node>> getNfaStack() {
+    public Mstack<LinkedList<Node>> getNfaStack() {
         return nfaStack;
     }
 
-    public Stack<Character> getOperatorsStack() {
+    public Mstack<Character> getOperatorsStack() {
         return operatorsStack;
     }
 
@@ -54,11 +56,11 @@ public class NFABuilder {
         this.inputChars = inputChars;
     }
 
-    public void setNfaStack(Stack<LinkedList<Node>> nfaStack) {
+    public void setNfaStack(Mstack<LinkedList<Node>> nfaStack) {
         this.nfaStack = nfaStack;
     }
 
-    public void setOperatorsStack(Stack<Character> operatorsStack) {
+    public void setOperatorsStack(Mstack<Character> operatorsStack) {
         this.operatorsStack = operatorsStack;
     }
 
@@ -99,7 +101,7 @@ public class NFABuilder {
             push(allChars);
         } else if (!checkIfOperator(next)) {
             push(next);
-        } else if (operatorsStack.isEmpty()) {
+        } else if (operatorsStack.empty()) {
             operatorsStack.push(next);
         } else if (next == '(') {
             operatorsStack.push(next);

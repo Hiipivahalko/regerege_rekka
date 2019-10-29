@@ -1,6 +1,7 @@
 package automaton;
 
 import automaton.node.Node;
+import dataStructures.Mstack;
 
 import java.util.*;
 
@@ -9,7 +10,7 @@ public class DFABuilder {
     private int nodeId;
     private LinkedList<Node> allDFANodes;
     private Set<Character> inputChars;
-    private Stack<Node> unprocessedDFANodes;
+    private Mstack<Node> unprocessedDFANodes;
     private char epsilon;
     private char allChars;
     private boolean isGoalNode;
@@ -26,7 +27,7 @@ public class DFABuilder {
         this.nodeId = nodeId;
         this.allDFANodes = new LinkedList<>();
         this.inputChars = inputChars;
-        this.unprocessedDFANodes = new Stack<>();
+        this.unprocessedDFANodes = new Mstack<>();
         this.epsilon = 0;
         this.allChars = 1;
         this.isGoalNode = false;
@@ -47,7 +48,7 @@ public class DFABuilder {
         return inputChars;
     }
 
-    public Stack<Node> getUnprocessedDFANodes() {
+    public Mstack<Node> getUnprocessedDFANodes() {
         return unprocessedDFANodes;
     }
 
@@ -70,7 +71,7 @@ public class DFABuilder {
         this.inputChars = inputChars;
     }
 
-    public void setUnprocessedDFANodes(Stack<Node> unprocessedDFANodes) {
+    public void setUnprocessedDFANodes(Mstack<Node> unprocessedDFANodes) {
         this.unprocessedDFANodes = unprocessedDFANodes;
     }
 
@@ -112,7 +113,7 @@ public class DFABuilder {
         allDFANodes.add(dfaStartNode);
         dfaNodes.put(dfaStartNodes, dfaStartNode);
 
-        unprocessedDFANodes.add(dfaStartNode);
+        unprocessedDFANodes.push(dfaStartNode);
 
         return dfaStartNode;
     }
@@ -123,7 +124,7 @@ public class DFABuilder {
      * @return solmujoukon, johon on lisätty "epsilonsolmut"
      */
     public Set<Node> epsilonTransfers(Set<Node> nodeSet) {
-        Stack<Node> nodesToProcess = new Stack<>();
+        Mstack<Node> nodesToProcess = new Mstack<>();
         for (Node n : nodeSet) {
             nodesToProcess.push(n);
         }

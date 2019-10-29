@@ -55,7 +55,7 @@ public class Mstack<T> {
      * Kertoo onko pino tyhjä
      * @return - palauttaa TRUE jos pino on tyhjä, muuten FALSE
      */
-    public boolean isEmpty() {
+    public boolean empty() {
         return size == 0;
     }
 

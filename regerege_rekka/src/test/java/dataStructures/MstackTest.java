@@ -101,15 +101,15 @@ public class MstackTest {
     @Test
     public void isEmpty() {
 
-        assertTrue(s.isEmpty());
+        assertTrue(s.empty());
         s.push(1);
-        assertTrue(!s.isEmpty());
+        assertTrue(!s.empty());
         s.push(1);
-        assertTrue(!s.isEmpty());
+        assertTrue(!s.empty());
         s.pop();
-        assertTrue(!s.isEmpty());
+        assertTrue(!s.empty());
         s.pop();
-        assertTrue(s.isEmpty());
+        assertTrue(s.empty());
 
     }
 

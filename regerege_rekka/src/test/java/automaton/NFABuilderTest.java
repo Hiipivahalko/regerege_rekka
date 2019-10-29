@@ -2,6 +2,7 @@ package automaton;
 
 
 import automaton.node.Node;
+import dataStructures.Mstack;
 import org.junit.*;
 
 import java.util.ArrayList;
@@ -75,7 +76,7 @@ public class NFABuilderTest {
 
     @Test
     public void concat() {
-        nb.setNfaStack(new Stack<>());
+        nb.setNfaStack(new Mstack<>());
 
         nb.push('a');
         nb.push('b');
@@ -83,13 +84,13 @@ public class NFABuilderTest {
         nb.concat();
 
         assertTrue(nb.getNfaStack().size() == 1);
-        assertTrue(nb.getNfaStack().get(0).size() == 4);
-        assertTrue(nb.getNfaStack().get(0).get(1).getTransfers().containsKey(epsilonMove));
+        assertTrue(nb.getNfaStack().peek().size() == 4);
+        assertTrue(nb.getNfaStack().peek().get(1).getTransfers().containsKey(epsilonMove));
     }
 
     @Test
     public void union() {
-        nb.setNfaStack(new Stack<>());
+        nb.setNfaStack(new Mstack<>());
 
         nb.push('a');
         int id = nb.getNfaStack().peek().get(0).getId();
@@ -100,7 +101,7 @@ public class NFABuilderTest {
         ArrayList<Node> startNode_moves = nb.getNfaStack().peek().get(0).getTransfers().get(epsilonMove);
 
         assertTrue(nb.getNfaStack().size() == 1);
-        assertTrue(nb.getNfaStack().get(0).size() == 6);
+        assertTrue(nb.getNfaStack().peek().size() == 6);
 
         assertTrue(startNode_moves.size() == 2);
         assertTrue(startNode_moves.get(0).getId() == id);
@@ -109,7 +110,7 @@ public class NFABuilderTest {
 
     @Test
     public void star() {
-        nb.setNfaStack(new Stack<>());
+        nb.setNfaStack(new Mstack<>());
 
         nb.push('a');
         int idA = nb.getNfaStack().peek().get(0).getId();
