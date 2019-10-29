@@ -1,6 +1,7 @@
 package automaton;
 
 import automaton.node.Node;
+import dataStructures.MLinkedList;
 import dataStructures.Mstack;
 
 import java.util.*;
@@ -8,7 +9,7 @@ import java.util.*;
 public class DFABuilder {
 
     private int nodeId;
-    private LinkedList<Node> allDFANodes;
+    private MLinkedList<Node> allDFANodes;
     private Set<Character> inputChars;
     private Mstack<Node> unprocessedDFANodes;
     private char epsilon;
@@ -25,7 +26,7 @@ public class DFABuilder {
      */
     public DFABuilder(int nodeId, Set<Character> inputChars) {
         this.nodeId = nodeId;
-        this.allDFANodes = new LinkedList<>();
+        this.allDFANodes = new MLinkedList<>();
         this.inputChars = inputChars;
         this.unprocessedDFANodes = new Mstack<>();
         this.epsilon = 0;
@@ -40,7 +41,7 @@ public class DFABuilder {
         return nodeId;
     }
 
-    public LinkedList<Node> getAllDFANodes() {
+    public MLinkedList<Node> getAllDFANodes() {
         return allDFANodes;
     }
 
@@ -63,7 +64,7 @@ public class DFABuilder {
         this.nodeId = nodeId;
     }
 
-    public void setAllDFANodes(LinkedList<Node> allDFANodes) {
+    public void setAllDFANodes(MLinkedList<Node> allDFANodes) {
         this.allDFANodes = allDFANodes;
     }
 
@@ -110,7 +111,7 @@ public class DFABuilder {
 
         Set<Node> dfaStartNodes = epsilonTransfers(nfaStarNodes);
         Node dfaStartNode = new Node(++nodeId,dfaStartNodes);
-        allDFANodes.add(dfaStartNode);
+        allDFANodes.addFirst(dfaStartNode);
         dfaNodes.put(dfaStartNodes, dfaStartNode);
 
         unprocessedDFANodes.push(dfaStartNode);
@@ -158,7 +159,7 @@ public class DFABuilder {
         if (!dfaNodes.containsKey(nextDFANode)) {
             Node newDFANode = new Node(++nodeId, nextDFANode);
             if (isGoalNode) newDFANode.setGoalNode(true);
-            allDFANodes.add(newDFANode);
+            allDFANodes.addLast(newDFANode);
             unprocessedDFANodes.push(newDFANode);
             dfaNodes.put(nextDFANode, newDFANode);
             curr.addTransfer(newDFANode, ch);

@@ -21,6 +21,22 @@ public class MLinkedList<T> implements Iterable<T> {
     }
 
     /**
+     * Palauttaa viimeisen objektin
+     * @return
+     */
+    public LinkNode<T> getLast() {
+        return last;
+    }
+
+    /**
+     * Palauttaa ensimmäisen objektin
+     * @return
+     */
+    public LinkNode<T> getFirst() {
+        return first;
+    }
+
+    /**
      * Lisää listan loppuun uuden alkon
      * @param key - listaan lisättävä objekti
      */

@@ -2,6 +2,7 @@ package automaton;
 
 
 import automaton.node.Node;
+import dataStructures.MLinkedList;
 import dataStructures.MList;
 import dataStructures.Mstack;
 import org.junit.*;
@@ -63,10 +64,10 @@ public class NFABuilderTest {
         char c = 'a';
         nb.push(c);
         assertTrue(nb.getNfaStack().size() == stackSize+1);
-        LinkedList<Node> l = nb.getNfaStack().pop();
+        MLinkedList<Node> l = nb.getNfaStack().pop();
         assertTrue(l.size() == 2);
 
-        Node a = l.get(0);
+        Node a = l.getFirstKey();
         assertTrue(a.getTransfers().containsKey(c));
         assertTrue(!a.getTransfers().containsKey('b'));
         assertTrue(a.getTransfers().get(c).size() == 1);
@@ -84,7 +85,7 @@ public class NFABuilderTest {
 
         assertTrue(nb.getNfaStack().size() == 1);
         assertTrue(nb.getNfaStack().peek().size() == 4);
-        assertTrue(nb.getNfaStack().peek().get(1).getTransfers().containsKey(epsilonMove));
+        assertTrue(nb.getNfaStack().peek().getFirst().getNext().getKey().getTransfers().containsKey(epsilonMove));
     }
 
     @Test
@@ -92,12 +93,12 @@ public class NFABuilderTest {
         nb.setNfaStack(new Mstack<>());
 
         nb.push('a');
-        int id = nb.getNfaStack().peek().get(0).getId();
+        int id = nb.getNfaStack().peek().getFirstKey().getId();
         nb.push('b');
-        int id2 = nb.getNfaStack().peek().get(0).getId();
+        int id2 = nb.getNfaStack().peek().getFirstKey().getId();
 
         nb.union();
-        MList<Node> startNode_moves = nb.getNfaStack().peek().get(0).getTransfers().get(epsilonMove);
+        MList<Node> startNode_moves = nb.getNfaStack().peek().getFirstKey().getTransfers().get(epsilonMove);
 
         assertTrue(nb.getNfaStack().size() == 1);
         assertTrue(nb.getNfaStack().peek().size() == 6);
@@ -112,9 +113,9 @@ public class NFABuilderTest {
         nb.setNfaStack(new Mstack<>());
 
         nb.push('a');
-        int idA = nb.getNfaStack().peek().get(0).getId();
+        int idA = nb.getNfaStack().peek().getFirstKey().getId();
         nb.push('b');
-        int idB = nb.getNfaStack().peek().get(0).getId();
+        int idB = nb.getNfaStack().peek().getFirstKey().getId();
 
         nb.concat();
 
@@ -125,12 +126,12 @@ public class NFABuilderTest {
 
         assertTrue(nb.getNfaStack().peek().size() == sizeBeforeStart + 2);
         int listSize = nb.getNfaStack().peek().size();
-        LinkedList<Node> top = nb.getNfaStack().peek();
-        assertTrue(top.get(listSize-2).getTransfers().get(epsilonMove).size() == 2);
-        assertTrue(top.get(listSize-2).getTransfers().get(epsilonMove).get(1).getId() == idA);
-        assertTrue(top.get(0).getTransfers().get(epsilonMove).size() == 2);
-        assertTrue(top.get(0).getTransfers().get(epsilonMove).get(0).getId() == top.get(listSize-1).getId());
-        assertTrue(top.get(0).getTransfers().get(epsilonMove).get(1).getId() == idA);
+        MLinkedList<Node> top = nb.getNfaStack().peek();
+        assertTrue(top.getLast().getPrev().getKey().getTransfers().get(epsilonMove).size() == 2);
+        assertTrue(top.getLast().getPrev().getKey().getTransfers().get(epsilonMove).get(1).getId() == idA);
+        assertTrue(top.getFirstKey().getTransfers().get(epsilonMove).size() == 2);
+        assertTrue(top.getFirstKey().getTransfers().get(epsilonMove).get(0).getId() == top.getLastKey().getId());
+        assertTrue(top.getFirstKey().getTransfers().get(epsilonMove).get(1).getId() == idA);
     }
 
     /**

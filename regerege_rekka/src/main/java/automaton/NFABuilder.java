@@ -1,10 +1,10 @@
 package automaton;
 
 import automaton.node.Node;
+import dataStructures.MLinkedList;
 import dataStructures.Mstack;
 
 import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.Set;
 
 public class NFABuilder {
@@ -15,7 +15,7 @@ public class NFABuilder {
     private char allChars;
     private char concatChar;
 
-    private Mstack<LinkedList<Node>> nfaStack;
+    private Mstack<MLinkedList<Node>> nfaStack;
     private Mstack<Character> operatorsStack;
 
     public NFABuilder() {
@@ -37,7 +37,7 @@ public class NFABuilder {
         return inputChars;
     }
 
-    public Mstack<LinkedList<Node>> getNfaStack() {
+    public Mstack<MLinkedList<Node>> getNfaStack() {
         return nfaStack;
     }
 
@@ -56,7 +56,7 @@ public class NFABuilder {
         this.inputChars = inputChars;
     }
 
-    public void setNfaStack(Mstack<LinkedList<Node>> nfaStack) {
+    public void setNfaStack(Mstack<MLinkedList<Node>> nfaStack) {
         this.nfaStack = nfaStack;
     }
 
@@ -81,9 +81,10 @@ public class NFABuilder {
             operate();
         }
 
-        LinkedList<Node> finalNFA = nfaStack.pop();
-        finalNFA.get(finalNFA.size()-1).setGoalNode(true);
-        return finalNFA.get(0);
+        MLinkedList<Node> finalNFA = nfaStack.pop();
+        //finalNFA.get(finalNFA.size()-1).setGoalNode(true);
+        finalNFA.getLastKey().setGoalNode(true);
+        return finalNFA.getFirstKey();
     }
 
 
@@ -267,7 +268,7 @@ public class NFABuilder {
 
         a.addTransfer(b, c);
 
-        LinkedList<Node> nfaTable = new LinkedList<>();
+        MLinkedList<Node> nfaTable = new MLinkedList<>();
         nfaTable.addLast(a);
         nfaTable.addLast(b);
 
@@ -280,10 +281,10 @@ public class NFABuilder {
      * Yhdistää kaksi automaattia yhteen (esim jonon "a ja b" tai "(ab) ja b")
      */
     public void concat() {
-        LinkedList<Node> nfaB = nfaStack.pop();
-        LinkedList<Node> nfaA = nfaStack.pop();
+        MLinkedList<Node> nfaB = nfaStack.pop();
+        MLinkedList<Node> nfaA = nfaStack.pop();
 
-        nfaA.get(nfaA.size()-1).addTransfer(nfaB.get(0), epsilon);
+        nfaA.getLastKey().addTransfer(nfaB.getFirstKey(), epsilon);
         nfaA.addAll(nfaB);
         nfaStack.push(nfaA);
     }
@@ -293,16 +294,16 @@ public class NFABuilder {
      */
     public void star() {
 
-        LinkedList<Node> nfaA = nfaStack.pop();
+        MLinkedList<Node> nfaA = nfaStack.pop();
 
         Node start = new Node(++nodeId);
         Node end = new Node(++nodeId);
 
         start.addTransfer(end, epsilon);
-        start.addTransfer(nfaA.get(0), epsilon);
+        start.addTransfer(nfaA.getFirstKey(), epsilon);
 
-        nfaA.get(nfaA.size()-1).addTransfer(end, epsilon);
-        nfaA.get(nfaA.size()-1).addTransfer(nfaA.get(0), epsilon);
+        nfaA.getLastKey().addTransfer(end, epsilon);
+        nfaA.getLastKey().addTransfer(nfaA.getFirstKey(), epsilon);
 
         nfaA.addFirst(start);
         nfaA.addLast(end);
@@ -315,16 +316,16 @@ public class NFABuilder {
      * Luo automaattiin haaran (a|b)
      */
     public void union() {
-        LinkedList<Node> nfaB = nfaStack.pop();
-        LinkedList<Node> nfaA = nfaStack.pop();
+        MLinkedList<Node> nfaB = nfaStack.pop();
+        MLinkedList<Node> nfaA = nfaStack.pop();
         Node start = new Node(++nodeId);
         Node end = new Node(++nodeId);
 
-        start.addTransfer(nfaA.get(0), epsilon);
-        start.addTransfer(nfaB.get(0), epsilon);
+        start.addTransfer(nfaA.getFirstKey(), epsilon);
+        start.addTransfer(nfaB.getFirstKey(), epsilon);
 
-        nfaA.get(nfaA.size()-1).addTransfer(end, epsilon);
-        nfaB.get(nfaB.size()-1).addTransfer(end, epsilon);
+        nfaA.getLastKey().addTransfer(end, epsilon);
+        nfaB.getLastKey().addTransfer(end, epsilon);
 
         nfaA.addFirst(start);
         nfaB.addLast(end);
