@@ -29,9 +29,7 @@ public class Process {
             try (BufferedReader bf = new BufferedReader(new FileReader(args[i]))) {
                 String line;
                 while ((line = bf.readLine()) != null) {
-                    if (finder.findSubstring(line)) System.out.println(row + ". :" + line);
-                    //System.out.println(line);
-                    row++;
+                    if (finder.findSubstring(line)) System.out.println(line);
                 }
             } catch (Exception e) {
                 System.out.println(e.getMessage());
