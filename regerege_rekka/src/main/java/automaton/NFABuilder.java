@@ -29,6 +29,8 @@ public class NFABuilder {
         this.operatorsStack = new Mstack<>();
     }
 
+    /// GETTERIT
+
     public int getNodeId() {
         return nodeId;
     }
@@ -76,7 +78,7 @@ public class NFABuilder {
             if (parseRegex(i, regex)) i++;
         }
 
-        //Toteuta loput operaattori komennot pinosta
+        //Toteuttaa loput operaattorikomennot pinosta
         while (!operatorsStack.empty()) {
             operate();
         }
@@ -88,6 +90,13 @@ public class NFABuilder {
     }
 
 
+    /**
+     * Käydään säännöllisen lausekkeen seuraava merkkiläpi
+     * ja tarkastetaan mitä pitäisi tehdä kyseisellä merkillä
+     * @param index - symbolin indeksi merkkijonossa (säännöllinen lauseke)
+     * @param regex - säännöllinen lauseke
+     * @return
+     */
     public boolean parseRegex(int index, String regex) {
         char next = regex.charAt(index);
         if (next == '\\') {
@@ -134,7 +143,7 @@ public class NFABuilder {
     }
 
     /**
-     * Esitkäsittelee regex lauseen siten että lisää tarvittavat konkatenaatio merkit lauseen sisään
+     * Esitkäsittelee regex lauseen, siten että lisää tarvittavat konkatenaatio merkit lauseen sisään
      * @param regex - säännöllinen lauseke
      * @return - palauttaa muokatun regex merkkijonon
      */

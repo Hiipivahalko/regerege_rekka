@@ -11,4 +11,4 @@
 * linkitetty lista
 * hajautettujoukko (Set)
 * hajautustaulu (hashmap)
-
+* Pino

@@ -4,7 +4,10 @@ import automaton.node.Node;
 import dataStructures.MLinkedList;
 import dataStructures.Mstack;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 public class DFABuilder {
 
@@ -102,7 +105,7 @@ public class DFABuilder {
     }
 
     /**
-     * Esikäsittelee DFA:n ja luo DFA:n aloitus solmun. Tämä saadaan nfa:n aloitus-solmusta
+     * Esikäsittelee DFA:n ja luo DFA:n aloitussolmun. Tämä saadaan nfa:n aloitussolmusta
      * sekä siitä päästävillä epsilon siirroilla
      */
     public Node DFAStartNodeFromNFA(Node nfaStartNode) {
@@ -146,7 +149,7 @@ public class DFABuilder {
     }
 
     /**
-     * Funktio etsii mahdolliset siirrot annetusta DFA solmusta, joka sisältää nfa solmu jokuon
+     * Funktio etsii mahdolliset siirrot annetusta DFA solmusta, joka sisältää nfa solmujoukon
      * @param curr - DFA solmu
      * @param ch - symboli jolla yritetään liikkua automaatissa
      */
